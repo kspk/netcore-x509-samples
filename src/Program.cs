@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Collections;
+using System.Linq;
 
 namespace X509Samples
 {
@@ -12,7 +14,9 @@ namespace X509Samples
         {
             var cert = ReadFromFile(PfxFile);
             CheckIfCertificateAuthority(cert);
+
             ReadKeysFromCertificate(PfxFile);
+            ReadExtensions(PfxFile);
         }
 
         internal static byte[] ReadFile(string filename)
@@ -34,6 +38,23 @@ namespace X509Samples
             {
                 fs.Write(content, 0, content.Length);
             }
+        }
+
+        internal static uint[] _Lookup32 = Enumerable.Range(0, 256).Select(i => {
+            string s = i.ToString("X2");
+            return ((uint)s[0]) + ((uint)s[1] << 16);
+        }).ToArray();
+        /// <summary>
+        /// Derived from http://stackoverflow.com/a/24343727/48700
+        /// </summary>
+        internal static string ByteArrayToHexString(byte[] bytes) {
+            var result = new char[bytes.Length * 2];
+            for (int i = 0; i < bytes.Length; i++) {
+                var val = _Lookup32[bytes[i]];
+                result[2*i] = (char)val;
+                result[2*i + 1] = (char) (val >> 16);
+            }
+            return new string(result);
         }
     }
 }

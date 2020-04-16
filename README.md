@@ -1,4 +1,4 @@
-# Working with certificates with dotnet core.
+# Working with certificates in dotnet core.
 A collection of samples to work with X509 certificates in dotnet core platform. Reading, creating, and some simple encryption/signing examples are documented here. Any new use cases we encounter will be upated here. 
 
 The samples are grouped in the following categories:

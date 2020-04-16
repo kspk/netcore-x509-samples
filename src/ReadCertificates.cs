@@ -48,11 +48,26 @@ namespace X509Samples
 
             // Get the public key from the utility function. This gives us a HEX encoding of the bytes of public key. 
             // Public key can optionally be derieved from the Public Key property. 
-            Console.WriteLine($"Public Key: {cert.GetPublicKeyString()}");
+            Console.WriteLine($"Public Key: {ByteArrayToHexString(cert.GetPublicKey())}");
 
             // There is no utility method to get a string representation of the private key, 
             // So we export it to a byte array, and Base64 encode to print on the console. 
-            Console.WriteLine($"Base64 Encoded Private Key: {Convert.ToBase64String(cert.PrivateKey.ExportPkcs8PrivateKey())}");
+            Console.WriteLine($"Base64 Encoded Private Key: {ByteArrayToHexString(cert.PrivateKey.ExportPkcs8PrivateKey())}");
+
+            return cert;
+        }
+
+        static X509Certificate2 ReadExtensions(string filename)
+        {
+            // Create the certificate object with a byte stream of the file. 
+            // File could optionally be specified directly as well. 
+            X509Certificate2 cert = new X509Certificate2(ReadFile(filename));
+
+            foreach(var ext in cert.Extensions)
+            {
+                Console.WriteLine($"OID: {ext.Oid.Value}, Friendly name: {ext.Oid.FriendlyName}, Value: {ByteArrayToHexString(ext.RawData)}");
+            }
+
             return cert;
         }
     }
