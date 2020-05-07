@@ -4,6 +4,7 @@ A collection of samples to work with X509 certificates in dotnet core platform. 
 The samples are grouped in the following categories:
 - [Certificate extensions](./CertificateExtensions.md)
 - [Reading certificates](./ReadingCertificates.md)
-- [Create certificates](./CreateCertificates.md)
+- [Creating certificates](./CreatingCertificates.md)
+- [Writing certificates](./WritingCertificates.md)
 - [Encrypt / Sign](./EncryptSign.md)
 

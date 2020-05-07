@@ -54,4 +54,14 @@ Console.WriteLine($"Base64 Encoded Private Key: {ByteArrayToHexString(cert.Priva
 
 > To enable Private Key to be exportable, the `X509KeyStorageFlags.Exportable` must be specified when opening the certificate file.
 
+Read certificate extensions - standard or custom:
+
+```csharp
+foreach(var ext in cert.Extensions)
+{
+    Console.WriteLine($"OID: {ext.Oid.Value}, Friendly name: {ext.Oid.FriendlyName}, Value: {ByteArrayToHexString(ext.RawData)}");
+}
+```
+> OIDs are delimited numerical representation for extension keys. Some of the extensions have a friendly name, may vary across platforms. Although friendly names may be used to lookup specific extensions, we must uses OIDs as key to ensure reliability across different platforms. 
+
 ---

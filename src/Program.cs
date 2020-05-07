@@ -12,11 +12,25 @@ namespace X509Samples
         const string PEMFile = "";
         static void Main(string[] args)
         {
-            var cert = ReadFromFile(PfxFile);
-            CheckIfCertificateAuthority(cert);
+            // var cert = ReadFromFile(PfxFile);
+            // CheckIfCertificateAuthority(cert);
 
-            ReadKeysFromCertificate(PfxFile);
-            ReadExtensions(PfxFile);
+            // ReadKeysFromCertificate(PfxFile);
+            // ReadExtensions(PfxFile);
+
+
+            // var cert = CreateCertificateWithECDsa(
+            //     "CN=Test Certificate",
+            //     true, 
+            //     2,
+            //     null
+            // );
+
+            var cert = CreateBasicECDsaCertificateWithIssuerName(
+                "CN=Test Certificate",
+                "CN=Test Issuer"
+            );
+            ReadFromCertificate(cert);
         }
 
         internal static byte[] ReadFile(string filename)

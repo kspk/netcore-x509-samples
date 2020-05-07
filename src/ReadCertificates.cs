@@ -37,12 +37,25 @@ namespace X509Samples
             Console.WriteLine($"Thumbprint: {cert.Thumbprint}");
             Console.WriteLine($"Version: {cert.Version}");
             Console.WriteLine($"Serial Number: {cert.SerialNumber}");
-            Console.WriteLine($"Key Algorithm: {(cert.PublicKey.Key.SignatureAlgorithm)}");
-            Console.WriteLine($"Key size: {cert.PublicKey.Key.KeySize}");
             Console.WriteLine($"Has Private Key: {cert.HasPrivateKey}");
 
             return cert;
         }
+
+
+        // Read the certificate from a file and display its basic information.
+        static X509Certificate2 ReadFromCertificate(X509Certificate2 cert)
+        {
+            Console.WriteLine($"Subject: {cert.Subject}");
+            Console.WriteLine($"Issuer name: {cert.Issuer}");
+            Console.WriteLine($"Thumbprint: {cert.Thumbprint}");
+            Console.WriteLine($"Version: {cert.Version}");
+            Console.WriteLine($"Serial Number: {cert.SerialNumber}");
+            Console.WriteLine($"Has Private Key: {cert.HasPrivateKey}");
+
+            return cert;
+        }
+
 
         // Check if a certificate is a Certificate Authority 
         static bool CheckIfCertificateAuthority(X509Certificate2 cert)
