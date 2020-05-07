@@ -4,7 +4,8 @@ Creating a certificate happens in 2 steps. We create a _Certificate Request_ and
 ## Create a certificate requests
 Create a basic certificate request
 ```csharp
-// A friendly name (canonical/distinguished). There are a few other prefixes available, at least one is required. 
+// A friendly name (canonical/distinguished). 
+// There are a few other prefixes available, at least one is required. 
 var subjectName = new X500DistinguishedName("CN=Test Certificate");
 
 // Create a key for creating the certificate - specify key algorithm and key size. 
@@ -23,10 +24,12 @@ Add Basic Constraints extension - Basic constraints of a certificate define whet
 ```csharp
 req.CertificateExtensions.Add(
     new X509BasicConstraintsExtension(
-        // certificateAuthority: Is the certificate an authority, aka. can it sign other certificates. 
+        // certificateAuthority: Is the certificate an authority, 
+        // aka. can it sign other certificates. 
         true, 
 
-        // hasPathLengthConstraint: Does it have any path length limit, aka. is there a limit on the number of levels in certificate chain under it. 
+        // hasPathLengthConstraint: Does it have any path length limit, 
+        // aka. is there a limit on the number of levels in certificate chain under it. 
         true, 
 
         // pathLengthConstraint: How many levels are allowed in the child hierarchy. 
@@ -39,14 +42,18 @@ req.CertificateExtensions.Add(
 
 Add a subject key identifier extension - Subject keys are unique keys (smaller than the actual certificate key) that help the host platform to speed up certificate lookups from the certificate store.
 ```csharp
-// The subject key is typically a hash of the public key, sometimes it is also combined with the subject and few other properties to compute the hash. Nevertheless it is expected to be globally unique.
+// The subject key is typically a hash of the public key, 
+// sometimes it is also combined with the subject and few other properties 
+// to compute the hash. Nevertheless it is expected to be globally unique.
 var subjectKeyExtension = new X509SubjectKeyIdentifierExtension(req.PublicKey, false);
 req.CertificateExtensions.Add(subjectKeyExtension);
 ```
 
 Add an authority key identifier extension - Authority Keys are subject keys for the signing certificates. These help in creation of a certificate chain by allowing quick lookups of parent or signing certificates. 
 ```csharp
-// Get the bytes from signer's subject key. In case the certificate is self-signed root, then we can either skip this, or set the authority key to the certificate's own subject key. 
+// Get the bytes from signer's subject key. 
+// In case the certificate is self-signed root, then we can either skip this, 
+// or set the authority key to the certificate's own subject key. 
 byte[] authorityKeyData = signerSubjectKeyIdentifier;
 
 var skisegment = new ArraySegment<byte>(authorityKeyData, 2, authorityKeyData.Length - 2);
@@ -110,7 +117,8 @@ X509Certificate2 cert = req.Create(
     // notAfter: Validity end time
     DateTimeOffset.UtcNow.AddYears(1),
 
-    // serialNumber: A serial number for the certificate. This is specific to the CA and used to track the list of certificates.
+    // serialNumber: A serial number for the certificate. 
+    // This is specific to the CA and used to track the list of certificates.
     Guid.NewGuid().ToByteArray()
 );
 ```
@@ -137,7 +145,8 @@ X509Certificate2 cert = req.Create(
     // notAfter: Validity end time
     DateTimeOffset.UtcNow.AddYears(1),
 
-    // serialNumber: A serial number for the certificate. This is specific to the CA and used to track the list of certificates.
+    // serialNumber: A serial number for the certificate. 
+    // This is specific to the CA and used to track the list of certificates.
     Guid.NewGuid().ToByteArray()
 );
 ```
